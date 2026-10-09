@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BHU Tech Club · learn from each other</title>
+  <!-- Font Awesome 6 (free) for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- GLOBAL RESET & VARIABLES ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    :root {
+      --bhu-blue: #0b2b5c;
+      --bhu-gold: #f9b234;
+      --bhu-light: #f8faff;
+      --bhu-soft: #eef3fc;
+      --accent-teal: #1e7e8c;
+      --card-bg: #ffffff;
+      --text-dark: #1e2a41;
+      --text-soft: #3e4e6b;
+      --shadow-sm: 0 12px 30px rgba(0, 20, 40, 0.08);
+      --shadow-hover: 0 20px 35px rgba(0, 20, 40, 0.15);
+      --radius-lg: 2rem;
+      --radius-md: 1.2rem;
+    }
+
+    body {
+      background: var(--bhu-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ---------- UTILITY ---------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.8rem;
+      position: relative;
+      display: inline-block;
+      color: var(--bhu-blue);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 70%;
+      height: 5px;
+      background: var(--bhu-gold);
+      border-radius: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--bhu-blue);
+      color: white;
+      padding: 0.85rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 2px solid transparent;
+      box-shadow: 0 6px 14px rgba(11, 43, 92, 0.2);
+      letter-spacing: 0.3px;
+    }
+
+    .btn:hover {
+      background: #0a1f40;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 28px rgba(11, 43, 92, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--bhu-blue);
+      border: 2px solid var(--bhu-blue);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: var(--bhu-blue);
+      color: white;
+    }
+
+    /* ---------- HEADER / NAVIGATION ---------- */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
+      border-bottom: 1px solid rgba(249, 178, 52, 0.2);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--bhu-blue);
+    }
+
+    .logo i {
+      color: var(--bhu-gold);
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 6px rgba(249, 178, 52, 0.3));
+    }
+
+    .logo span {
+      background: linear-gradient(145deg, #0b2b5c, #1a4a7a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--bhu-gold);
+      transition: width 0.25s;
+      border-radius: 4px;
+    }
+
+    .nav-links a:hover {
+      color: var(--bhu-blue);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: var(--bhu-blue);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ---------- HERO SECTION ---------- */
+    .hero {
+      padding: 5.5rem 0 6rem;
+      position: relative;
+      background: radial-gradient(circle at 90% 10%, rgba(249, 178, 52, 0.08) 0%, transparent 35%),
+                  radial-gradient(circle at 10% 80%, rgba(30, 126, 140, 0.06) 0%, transparent 40%);
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    .hero h1 {
+      font-size: 4.2rem;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--bhu-blue);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 i {
+      color: var(--bhu-gold);
+      font-size: 3.8rem;
+      margin-right: 10px;
+    }
+
+    .hero .tagline {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--accent-teal);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero .tagline i {
+      font-size: 1.8rem;
+      color: var(--bhu-gold);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-soft);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-item i {
+      font-size: 2.2rem;
+      color: var(--bhu-gold);
+    }
+
+    .stat-item div span:first-child {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--bhu-blue);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-item div span:last-child {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ---------- LEARNING / COLLAB CARDS ---------- */
+    .learn-section {
+      padding: 5rem 0;
+      background: white;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.02);
+      margin-top: 2rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .learn-card {
+      background: var(--card-bg);
+      padding: 2.4rem 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(249, 178, 52, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .learn-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(249, 178, 52, 0.4);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, rgba(11, 43, 92, 0.05), rgba(249, 178, 52, 0.1));
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      font-size: 2.2rem;
+      color: var(--bhu-blue);
+      transition: 0.2s;
+    }
+
+    .learn-card:hover .card-icon {
+      background: var(--bhu-gold);
+      color: var(--bhu-blue);
+    }
+
+    .learn-card h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--bhu-blue);
+    }
+
+    .learn-card p {
+      color: var(--text-soft);
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--accent-teal);
+      font-weight: 500;
+      border-top: 1px dashed #d9e2ef;
+      padding-top: 1.2rem;
+      margin-top: auto;
+    }
+
+    .card-meta i {
+      color: var(--bhu-gold);
+    }
+
+    /* ---------- COMMUNITY / TESTIMONIAL ---------- */
+    .community-section {
+      padding: 5rem 0;
+      background: var(--bhu-soft);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .testimonial {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: 0.2s;
+      border-left: 8px solid var(--bhu-gold);
+    }
+
+    .testimonial:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .testimonial i.fa-quote-left {
+      color: var(--bhu-gold);
+      font-size: 1.8rem;
+      opacity: 0.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .testimonial p {
+      font-style: italic;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+    }
+
+    .testimonial .student {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 600;
+      color: var(--bhu-blue);
+    }
+
+    .student-avatar {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(145deg, var(--bhu-blue), #235a9c);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* ---------- CTA / JOIN BANNER ---------- */
+    .join-banner {
+      background: linear-gradient(135deg, var(--bhu-blue), #123d73);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 3rem;
+      margin: 4rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      box-shadow: 0 25px 40px -10px rgba(11, 43, 92, 0.4);
+      color: white;
+    }
+
+    .join-banner h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+
+    .join-banner h2 i {
+      color: var(--bhu-gold);
+      margin-right: 10px;
+    }
+
+    .join-banner p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      max-width: 500px;
+    }
+
+    .join-banner .btn {
+      background: var(--bhu-gold);
+      color: var(--bhu-blue);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      font-weight: 700;
+      border: none;
+    }
+
+    .join-banner .btn:hover {
+      background: #ffc85c;
+      transform: scale(1.02);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 3rem 0 2rem;
+      border-top: 1px solid #d9e2ef;
+      background: white;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--bhu-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-logo i {
+      color: var(--bhu-gold);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--text-soft);
+      transition: 0.2s;
+    }
+
+    .social-links a:hover {
+      color: var(--bhu-gold);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: white;
+        padding: 1.5rem 0;
+        margin-top: 1rem;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-sm);
+        gap: 1.2rem;
+        align-items: center;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .hero .tagline {
+        font-size: 1.2rem;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .join-banner {
+        padding: 2rem;
+        text-align: center;
+        flex-direction: column;
+      }
+
+      .join-banner h2 {
+        font-size: 2rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fas fa-code"></i>
+        <span>BHU Tech Club</span>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#learn">Learn</a>
+        <a href="#community">Community</a>
+        <a href="#join">Join</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>
+            <i class="fas fa-users"></i> Learn from <br>each other.
+          </h1>
+          <div class="tagline">
+            <i class="fas fa-handshake"></i> BHU Tech Club — peer‑powered learning
+          </div>
+          <p>
+            We are a community of curious minds at Banaras Hindu University. 
+            No hierarchy, just shared knowledge — coding, robotics, AI, design, and more.
+          </p>
+          <div class="hero-actions">
+            <a href="#join" class="btn"><i class="fas fa-rocket" style="margin-right: 8px;"></i>Join the club</a>
+            <a href="#learn" class="btn btn-outline"><i class="fas fa-book-open" style="margin-right: 8px;"></i>Explore sessions</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <i class="fas fa-user-graduate"></i>
+              <div>
+                <span>200+</span>
+                <span>active learners</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <div>
+                <span>30+</span>
+                <span>peer workshops</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <span>weekly</span>
+                <span>meetups</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARNING CARDS / WHAT WE DO -->
+    <section class="learn-section" id="learn">
+      <div class="container">
+        <h2 class="section-title">Where we learn together</h2>
+        <div class="card-grid">
+          <div class="learn-card">
+            <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>Peer coding</h3>
+            <p>Pair programming, code reviews, and live debugging. We grow faster by solving problems together.</p>
+            <div class="card-meta"><i class="fas fa-calendar-alt"></i> Every Tuesday & Thursday</div>
+          </div>
+          <div class="learn-card">
+            <div class="card-icon"><i class="fas fa-robot"></i></div>
+            <h3>AI & Robotics</h3>
+            <p>From ML basics to building line followers. Student‑led sessions where everyone teaches and learns.</p>
+            <div class="card-meta"><i class="fas fa-flask"></i> Hardware lab, Science block</div>
+          </div>
+          <div class="learn-card">
+            <div class="card-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>Design & UI/UX</h3>
+            <p>Figma workshops, design critiques, and portfolio reviews. Feedback from peers, not just professors.</p>
+            <div class="card-meta"><i class="fas fa-pen-fancy"></i> Biweekly design jams</div>
+          </div>
+          <div class="learn-card">
+            <div class="card-icon"><i class="fas fa-database"></i></div>
+            <h3>Open source & devops</h3>
+            <p>Git, Docker, cloud basics. Learn how to contribute to real projects as a team.</p>
+            <div class="card-meta"><i class="fas fa-code-branch"></i> Hackathon prep</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY / TESTIMONIALS -->
+    <section class="community-section" id="community">
+      <div class="container">
+        <h2 class="section-title">Voices from our club</h2>
+        <div class="testimonial-grid">
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>“I learned more in one peer session than a whole semester. Everyone brings something unique.”</p>
+            <div class="student">
+              <div class="student-avatar">A</div>
+              <span>Ananya · CS 3rd year</span>
+            </div>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>“The club feels like a family. We debug together, laugh together, and build cool stuff.”</p>
+            <div class="student">
+              <div class="student-avatar">R</div>
+              <span>Rohan · ECE 2nd year</span>
+            </div>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>“I was afraid of public speaking, but teaching a small topic here gave me huge confidence.”</p>
+            <div class="student">
+              <div class="student-avatar">S</div>
+              <span>Shreya · MSc IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN CTA BANNER -->
+    <div class="container" id="join">
+      <div class="join-banner">
+        <div>
+          <h2><i class="fas fa-hand-peace"></i> Ready to learn & share?</h2>
+          <p>No prior experience needed — just curiosity and respect for others.</p>
+        </div>
+        <a href="#" class="btn" id="joinNowBtn"><i class="fas fa-user-plus"></i> Become a member</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <i class="fas fa-code"></i> BHU Tech Club
+      </div>
+      <div class="social-links">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <div class="copyright">
+        © 2025 BHU Tech Club · learn from each other
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT (interactivity) -->
+  <script>
+    (function() {
+      // mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          // change icon
+          const icon = menuToggle.querySelector('i');
+          if (navLinks.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+      }
+
+      // close mobile menu when a link is clicked
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          const icon = menuToggle?.querySelector('i');
+          if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+      });
+
+      // join now button – friendly alert (demo)
+      const joinBtn = document.getElementById('joinNowBtn');
+      if (joinBtn) {
+        joinBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('🎉 Thanks for your interest! Reach out to us at techclub@bhu.ac.in or visit our next meetup. We learn from each other!');
+        });
+      }
+
+      // smooth scroll for anchor links (native CSS scroll-behavior works too, but just a fallback)
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // small hover effect for cards (extra flair not needed, but keeps interactive)
+      // already handled by CSS
+    })();
+  </script>
+</body>
+</html>
